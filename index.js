@@ -34,7 +34,7 @@ app.get("/info", (request, response) => {
   response.send(
     `<p>Phonebook has info for ${
       persons.length
-    } people</p></br><p>${Date()}</p>`
+    } people</p><br/><p>${Date()}</p>`
   );
 });
 
