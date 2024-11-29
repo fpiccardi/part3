@@ -50,8 +50,9 @@ app.get("/api/persons/:id", (request, response) => {
   const person = persons.find((person) => person.id === id);
 
   //if the note is found
-  if (note) {
+  if (person) {
     //return it in the response
+    response.json(person);
   } else {
     //otherwise
     //send response status 404
