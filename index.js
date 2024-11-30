@@ -69,6 +69,33 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
+app.post("/api/persons", (request, response) => {
+  //save reqs body
+  const body = request.body;
+
+  //if no body is passed return 400 - content missing
+  if (!body) {
+    return respose.status(400).json({ error: "content missing" });
+  }
+
+  //potentially add checks for every property
+
+  //generate a random id from 0 to 1_000_000
+  const id = String(Math.round(Math.random() * 1_000_000));
+
+  //create a new person with the id
+  const newPerson = {
+    id: id,
+    ...body,
+  };
+
+  //add new person
+  persons.push(newPerson);
+
+  //return success
+  response.json(newPerson);
+});
+
 const PORT = 3001;
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);
