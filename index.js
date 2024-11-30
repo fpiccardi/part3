@@ -60,6 +60,15 @@ app.get("/api/persons/:id", (request, response) => {
   }
 });
 
+app.delete("/api/persons/:id", (request, response) => {
+  //use id to find that entry
+  const id = request.params.id;
+  //delete it from the persons array
+  persons = persons.filter((person) => person.id !== id);
+  //return response status 204
+  response.status(204).end();
+});
+
 const PORT = 3001;
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);
