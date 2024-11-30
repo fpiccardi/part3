@@ -73,12 +73,20 @@ app.post("/api/persons", (request, response) => {
   //save reqs body
   const body = request.body;
 
-  //if no body is passed return 400 - content missing
+  //if no body is passed return 400 - bad request
   if (!body) {
-    return respose.status(400).json({ error: "content missing" });
+    return response.status(400).json({ error: "content missing" });
   }
 
-  //potentially add checks for every property
+  //if name or number are missing return 400 - bad request
+  if (!body.name || !body.number) {
+    return response.status(400).json({ error: "properties missing" });
+  }
+
+  //if name already exists in the phonebook return 409 - conflict
+  if (persons.some((person) => person.name === body.name)) {
+    return response.status(409).json({ error: "name must be unique" });
+  }
 
   //generate a random id from 0 to 1_000_000
   const id = String(Math.round(Math.random() * 1_000_000));
@@ -93,7 +101,7 @@ app.post("/api/persons", (request, response) => {
   persons.push(newPerson);
 
   //return success
-  response.json(newPerson);
+  return response.json(newPerson);
 });
 
 const PORT = 3001;
